@@ -1,5 +1,17 @@
-venv/
-.env/
-.venv/
+# Python
 __pycache__/
 *.pyc
+*.pyo
+
+# Virtual environments
+metadrive_env/
+metadrive_env_/
+.venv/
+env/
+
+# VS Code
+.vscode/
+
+# OS junk
+Thumbs.db
+.DS_Store
