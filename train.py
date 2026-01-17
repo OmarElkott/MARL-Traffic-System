@@ -26,7 +26,6 @@ def make_env(config: dict) -> MultiAgentRoundaboutEnv:
 def build_algo_config(args: argparse.Namespace) -> PPOConfig:
     env_config = build_env_config(args.num_agents, args.render)
 
-    # Probe spaces once (RLlib needs explicit spaces for multi-agent policies)
     dummy_env = MultiAgentRoundaboutEnv(env_config)
     obs_space = dummy_env.observation_space
     act_space = dummy_env.action_space
@@ -34,7 +33,7 @@ def build_algo_config(args: argparse.Namespace) -> PPOConfig:
 
     policies = {
         "shared_policy": (
-            None,       # use default policy class
+            None,      
             obs_space,
             act_space,
             {},
@@ -45,7 +44,7 @@ def build_algo_config(args: argparse.Namespace) -> PPOConfig:
         PPOConfig()
         .environment(env="metadrive_roundabout", env_config=env_config)
         .framework("torch")
-        .rollouts(num_rollout_workers=args.workers)
+        .env_runners(num_rollout_workers=args.workers)
         .training(train_batch_size=args.train_batch_size)
         .multi_agent(
             policies=policies,
