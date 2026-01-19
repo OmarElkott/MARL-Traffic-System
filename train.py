@@ -4,7 +4,6 @@ from __future__ import annotations
 from ray.rllib.env.multi_agent_env import MultiAgentEnv
 
 import argparse
-
 import ray
 from metadrive import MultiAgentRoundaboutEnv
 from ray.rllib.algorithms.ppo import PPOConfig
@@ -16,7 +15,6 @@ from ray.tune.registry import register_env
 class RLLibMetaDriveRoundabout(MultiAgentEnv):
     def __init__(self, config):
         self.env = MultiAgentRoundaboutEnv(config)
-        # shared spaces
         self.observation_space = self.env.observation_space
         self.action_space = self.env.action_space
 
@@ -41,7 +39,7 @@ class RLLibMetaDriveRoundabout(MultiAgentEnv):
     def close(self):
         return self.env.close()
 
-def build_env_config(num_agents: int, use_render: bool) -> dict:
+def build_env_config(num_agents: int, use_render: bool):
     return {
         "use_render": use_render,
         "manual_control": False,
@@ -50,7 +48,7 @@ def build_env_config(num_agents: int, use_render: bool) -> dict:
     }
 
 
-def make_env(config: dict):
+def make_env(config):
     return RLLibMetaDriveRoundabout(config)
 
 def build_algo_config(args: argparse.Namespace) -> PPOConfig:
