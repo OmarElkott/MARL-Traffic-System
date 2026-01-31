@@ -70,7 +70,7 @@ def build_algo_config(args: argparse.Namespace) -> PPOConfig:
         .framework("torch")
         # Old stack but using new config name (you already migrated off .rollouts)
         .env_runners(num_env_runners=args.workers)
-        .training(train_batch_size=args.train_batch_size)
+        .training(train_batch_size=args.train_batch_size, clip_gradients=1.0)
         .multi_agent(
             policies=policies,
             policy_mapping_fn=lambda agent_id, *a, **k: "shared_policy",
